@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interstitial Example</title>
+    <style>
+        #interstitial {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 250px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            text-align: center;
+            z-index: 1000;
+        }
+        #interstitial img {
+            width: 100%;
+            height: auto;
+        }
+        #close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<a href="https://example.com/1" class="tracked-link">Link 1</a>
+<a href="https://example.com/2" class="tracked-link">Link 2</a>
+<a href="https://example.com/3" class="tracked-link">Link 3</a>
+
+<div id="interstitial">
+    <button id="close-btn">Close</button>
+    <img src="interstitial image/Project Js.png" alt="Interstitial Image">
+</div>
+
+<script>
+    let clickCount = 0;
+    const links = document.querySelectorAll('.tracked-link');
+    const interstitial = document.getElementById('interstitial');
+    const closeButton = document.getElementById('close-btn');
+
+    links.forEach(link => {
+        link.addEventListener('click', function(event) {
+            clickCount++;
+            if (clickCount % 2 === 0) {
+                event.preventDefault();
+                showInterstitial(link.href);
+            }
+        });
+    });
+
+    function showInterstitial(href) {
+        interstitial.style.display = 'block';
+        setTimeout(() => {
+            closeInterstitial();
+            window.location.href = href;
+        }, 10000);
+    }
+
+    function closeInterstitial() {
+        interstitial.style.display = 'none';
+    }
+
+    closeButton.addEventListener('click', closeInterstitial);
+</script>
+
+</body>
+</html>
